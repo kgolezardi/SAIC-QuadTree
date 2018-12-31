@@ -2,7 +2,7 @@ import svgwrite
 import random
 
 from divisions import UniformDivision
-from shapes import NoShape, Circle, Rectangle
+from shapes import NoShape, Circle, Rectangle, Decagon, Octagon
 
 PAGE_SIZE = (0, 0, 700, 700)
 
@@ -61,9 +61,11 @@ def assign_shapes(quadtree):
 
 
 shapes = [
-    (NoShape, 6),
+    (NoShape, 10),
     (Circle, 3),
-    (Rectangle, 1)
+    (Rectangle, 1),
+    (Decagon, 3),
+    (Octagon, 3),
 ]
 
 qtree = QuadTree()
