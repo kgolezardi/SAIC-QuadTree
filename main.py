@@ -61,11 +61,11 @@ def assign_shapes(quadtree):
 
 
 shapes = [
-    (NoShape, 10),
-    (Circle, 3),
-    (Rectangle, 1),
-    (Decagon, 3),
-    (Octagon, 3),
+    (NoShape, 12),
+    (Circle, 2),
+    (Rectangle, 4),
+    (Decagon, 2),
+    (Octagon, 2),
 ]
 
 qtree = QuadTree()

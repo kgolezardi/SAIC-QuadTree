@@ -80,3 +80,13 @@ class Octagon(Polygon):
     STROKE_WIDTH_PERCENTAGE = 0.20
     SIDE_NUMBERS = 8
     COLOR = 'green'
+
+
+class BackSlash(Shape):
+    @classmethod
+    def raw_points(cls):
+        pass
+
+    @classmethod
+    def draw(cls, dwg, position):
+        pass

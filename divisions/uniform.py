@@ -9,8 +9,8 @@ class UniformDivision(Division):
     Keeps a list of all leaf grids, selects one randomly, and divides the chosen grid.
     """
 
-    DIVIDE_ITERATIONS = 400
-    MAX_DIVIDE_DEPTH = 6
+    DIVIDE_ITERATIONS = 150
+    MAX_DIVIDE_DEPTH = 5
 
     @classmethod
     def divide(cls, quadtree):
