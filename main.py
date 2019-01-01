@@ -33,10 +33,10 @@ def draw_grids(dwg, grid, position, show_lines=True):
         dwg.add(dwg.line(up, down, stroke=svgwrite.rgb(10, 10, 16, '%')))
         dwg.add(dwg.line(left, right, stroke=svgwrite.rgb(10, 10, 16, '%')))
 
-    draw_grids(dwg, grid.subgrids[0], (x1, y1) + center)
-    draw_grids(dwg, grid.subgrids[1], up + right)
-    draw_grids(dwg, grid.subgrids[2], center + (x2, y2))
-    draw_grids(dwg, grid.subgrids[3], left + down)
+    draw_grids(dwg, grid.subgrids[0], (x1, y1) + center, show_lines)
+    draw_grids(dwg, grid.subgrids[1], up + right, show_lines)
+    draw_grids(dwg, grid.subgrids[2], center + (x2, y2), show_lines)
+    draw_grids(dwg, grid.subgrids[3], left + down, show_lines)
 
 
 def generate_grids(quadtree, algorithm):
@@ -73,5 +73,5 @@ generate_grids(qtree, UniformDivision)
 assign_shapes(qtree)
 
 dwg = svgwrite.Drawing('out/test.svg', profile='tiny')
-draw_grids(dwg, qtree, PAGE_SIZE)
+draw_grids(dwg, qtree, PAGE_SIZE, False)
 dwg.save()
