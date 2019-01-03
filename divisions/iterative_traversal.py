@@ -9,7 +9,7 @@ class InterativeTraversalDivision(Division):
     On each call, it traverse randomly on the grid tree and devides when reaches a leaf.
     """
 
-    DIVIDE_ITERATIONS = 400
+    DIVIDE_ITERATIONS = 200
     MAX_DIVIDE_DEPTH = 6
 
     @classmethod
@@ -20,7 +20,7 @@ class InterativeTraversalDivision(Division):
     @classmethod
     def iterative_divide(cls, qt, depth=0):
         if len(qt.subgrids) == 0:
-            qt.devide()
+            qt.divide()
             return True
         if depth > cls.MAX_DIVIDE_DEPTH:
             return False

@@ -1,10 +1,11 @@
 import svgwrite
 import random
+import sys
 
-from divisions import UniformDivision
-from shapes import NoShape, Circle, Rectangle, Decagon, Octagon
+from divisions import UniformDivision, InterativeTraversalDivision
+from shapes import NoShape, Circle, Rectangle, Decagon, Octagon, BackSlash, Slash
 
-PAGE_SIZE = (0, 0, 700, 700)
+PAGE_SIZE = (0, 0, 2000, 2000)
 
 
 class QuadTree:
@@ -61,17 +62,25 @@ def assign_shapes(quadtree):
 
 
 shapes = [
-    (NoShape, 12),
-    (Circle, 2),
-    (Rectangle, 4),
-    (Decagon, 2),
-    (Octagon, 2),
+    (NoShape, 28),
+    (Circle, 3),
+    (Rectangle, 7),
+    (Octagon, 3),
+    (BackSlash, 2),
+    (Slash, 2)
 ]
+
+if len(sys.argv) >= 3:
+    random.seed(sys.argv[2])
 
 qtree = QuadTree()
 generate_grids(qtree, UniformDivision)
 assign_shapes(qtree)
 
-dwg = svgwrite.Drawing('out/test.svg', profile='tiny')
+dwg = svgwrite.Drawing('out/%s.svg' % sys.argv[1], profile='tiny')
 draw_grids(dwg, qtree, PAGE_SIZE, False)
 dwg.save()
+
+dwg_line = svgwrite.Drawing('out/%s-lines.svg' % sys.argv[1], profile='tiny')
+draw_grids(dwg_line, qtree, PAGE_SIZE)
+dwg_line.save()

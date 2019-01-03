@@ -35,9 +35,37 @@ class Rectangle(Shape):
 
 
 class Polygon(Shape):
+    COLOR = None
+
+    @classmethod
+    def raw_points(cls):
+        raise NotImplementedError("You should implement this method")
+
+    @classmethod
+    def draw(cls, dwg, position):
+        if cls.COLOR is None:
+            raise NotImplementedError("Certain variables should be set in derived class")
+
+        raw_points = cls.raw_points()
+        points = []
+        x1, y1, x2, y2 = position
+        cell_width = x2 - x1
+        center = ((x1 + x2) / 2, (y1 + y2) / 2)
+        for x, y in raw_points:
+            # x = x * cell_width * (1 - cls.STROKE_WIDTH_PERCENTAGE) / 2 + center[0]
+            # y = y * cell_width * (1 - cls.STROKE_WIDTH_PERCENTAGE) / 2 + center[1]
+
+            x = x * cell_width / 2 + center[0]
+            y = y * cell_width / 2 + center[1]
+            points.append((x, y))
+        # stroke_width = cell_width * cls.STROKE_WIDTH_PERCENTAGE
+        # dwg.add(dwg.polygon(points=points, fill='none', stroke=cls.COLOR, stroke_width=stroke_width))
+        dwg.add(dwg.polygon(points=points, fill=cls.COLOR))
+
+
+class RegularPolygon(Polygon):
     STROKE_WIDTH_PERCENTAGE = None
     SIDE_NUMBERS = None
-    COLOR = None
 
     @classmethod
     def raw_points(cls):
@@ -52,41 +80,32 @@ class Polygon(Shape):
             points.append((x, y))
         return points
 
-    @classmethod
-    def draw(cls, dwg, position):
-        if cls.COLOR is None:
-            raise NotImplementedError("Certain variables should be set in derived class")
 
-        raw_points = cls.raw_points()
-        points = []
-        x1, y1, x2, y2 = position
-        cell_width = x2 - x1
-        center = ((x1 + x2) / 2, (y1 + y2) / 2)
-        for x, y in raw_points:
-            x = x * cell_width * (1 - cls.STROKE_WIDTH_PERCENTAGE) / 2 + center[0]
-            y = y * cell_width * (1 - cls.STROKE_WIDTH_PERCENTAGE) / 2 + center[1]
-            points.append((x, y))
-        stroke_width = cell_width * cls.STROKE_WIDTH_PERCENTAGE
-        dwg.add(dwg.polygon(points=points, fill='none', stroke=cls.COLOR, stroke_width=stroke_width))
-
-
-class Decagon(Polygon):
-    STROKE_WIDTH_PERCENTAGE = 0.20
+class Decagon(RegularPolygon):
+    STROKE_WIDTH_PERCENTAGE = 0.5
     SIDE_NUMBERS = 10
     COLOR = 'red'
 
 
-class Octagon(Polygon):
-    STROKE_WIDTH_PERCENTAGE = 0.20
+class Octagon(RegularPolygon):
+    STROKE_WIDTH_PERCENTAGE = 0.5
     SIDE_NUMBERS = 8
     COLOR = 'green'
 
 
-class BackSlash(Shape):
-    @classmethod
-    def raw_points(cls):
-        pass
+class BackSlash(Polygon):
+    COLOR = 'brown'
 
     @classmethod
-    def draw(cls, dwg, position):
-        pass
+    def raw_points(cls):
+        points = [(-1, -1), (-1, -0.5), (1, 1), (1, 0.5)]
+        return points
+
+
+class Slash(Polygon):
+    COLOR = 'pink'
+
+    @classmethod
+    def raw_points(cls):
+        points = [(1, -1), (1, -0.5), (-1, 1), (-1, 0.5)]
+        return points
